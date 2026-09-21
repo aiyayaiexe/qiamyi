@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Scrapbook Website</title>
+  
+  <!-- 1. FIXED: Correct script path loaded so the browser can read the 3D model engine -->
+  <script type="module" src="https://googleapis.com"></script>
+  
   <style>
     body {
       margin: 0;
@@ -20,21 +25,118 @@
       align-items: center;
     }
 
+    /* Your large translucent card container */
     .card-container {
       width: 1100px;            
       height: 600px;              
       background-color: rgba(255, 255, 255, 0.85);
       border-radius: 20px;        
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); 
-      
       padding: 30px; 
       box-sizing: border-box;
+
+      /* Flexbox layout inside the card to put elements side-by-side */
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    /* Left column for text or scrapbook entries */
+    .text-column {
+      width: 45%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Right column bounding box for the 3D file */
+    .model-column {
+      width: 50%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* The actual 3D model engine styling */
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      background-color: transparent; 
+      --poster-color: transparent;
+    }
+
+    /* Progress bar layout specs */
+    .progress-bar {
+      display: block;
+      width: 33%;
+      height: 10%;
+      max-height: 2px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .progress-bar.hide {
+      display: none;
+    }
+    .update-bar {
+      background-color: rgba(0, 0, 0, 0.8);
+      width: 0%;
+      height: 100%;
+      transition: width 0.3s;
+    }
+
+    /* Mobile AR activation overlay */
+    #ar-button {
+      background-color: #ffffff;
+      border-radius: 4px;
+      border: none;
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      padding: 10px 16px;
+      font-size: 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
     }
   </style>
 </head>
 <body>
 
+  <!-- The large main card wrapper -->
   <div class="card-container">
+    
+    <!-- LEFT COLUMN: Your text content and layout elements -->
+    <div class="text-column">
+      <h1>My Scrapbook Layout</h1>
+      <p>This is where your descriptions, title text, or inline photo layout grids can sit, nested perfectly on the left side of the screen container.</p>
+    </div>
+
+    <!-- RIGHT COLUMN: The 3D Cat character asset -->
+    <div class="model-column">
+      <!-- 2. FIXED: File extension changed to lowercase .glb to match your exact file -->
+      <model-viewer 
+        src="Cat character.glb" 
+        ar 
+        ar-modes="webxr scene-viewer quick-look" 
+        camera-controls 
+        tone-mapping="neutral" 
+        shadow-intensity="1.63" 
+        exposure="0.77" 
+        shadow-softness="0.36">
+        
+        <div class="progress-bar hide" slot="progress-bar">
+          <div class="update-bar"></div>
+        </div>
+        
+        <button slot="ar-button" id="ar-button">
+          👋 View in your space
+        </button>
+      </model-viewer>
+    </div>
+
   </div>
 
 </body>
