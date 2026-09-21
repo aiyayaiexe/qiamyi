@@ -1,1 +1,15 @@
-hijdhfjdshfjdhsz
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100vw;
+    
+    background-image: url('https://cdn.phototourl.com/free/2026-09-21-c418ba7e-4e91-4684-90f0-32c6ccc9947a.jpg');
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
